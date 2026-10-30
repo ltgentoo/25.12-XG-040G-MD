@@ -242,8 +242,9 @@ jobs:
               NEW_FILE="$NAME"-"$WRT_INFO"-"$WRT_BRANCH"-"$WRT_DATE"."$EXT"
               mv -f $FILE ./upload/$NEW_FILE
             done
-            find ./bin -type f -name 'kmod-wireguard-*.apk' -print -exec cp -v {} ./upload/
-            find ./bin -type f -name 'kmod-wireguard-*.ipk' -print -exec cp -v {} ./upload/
+            find ./ -type f -name "kmod*.apk"
+            find ./bin -type f -name 'kmod-wireguard-*.apk' -print -exec cp -v {} ./upload/ \;
+            find ./bin -type f -name 'kmod-wireguard-*.ipk' -print -exec cp -v {} ./upload/ \;
             find ./bin/targets/ -type f -exec mv -f {} ./upload/ \;
 
             make clean -j$(nproc)
