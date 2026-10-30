@@ -178,10 +178,21 @@ jobs:
           else
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
           fi
+          echo "===== before Settings.sh, check wireguard ====="
+          grep -i wireguard .config
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
+          echo "===== after Settings.sh, before make defconfig ====="
+          grep -i wireguard .config
 
-          make defconfig -j$(nproc) && make clean -j$(nproc)
+          make defconfig -j$(nproc)
+
+          echo "===== after make defconfig, final .config ====="
+          grep -i wireguard .config
+
+          make clean -j$(nproc)
+
+          #make defconfig -j$(nproc) && make clean -j$(nproc)
           # defconfig跑完之后，再次追加wireguard配置！
           echo "CONFIG_PACKAGE_kmod-wireguard=m" >> .config
           echo "CONFIG_PACKAGE_wireguard-tools=m" >> .config
