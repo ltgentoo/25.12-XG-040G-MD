@@ -153,6 +153,9 @@ jobs:
           cd ./wrt/
 
           ./scripts/feeds update -a
+          rm -rf feeds/video
+          rm -rf feeds/packages/net/fwknop
+          rm -rf feeds/packages/audio/squeezelite-custom
           ./scripts/feeds install -a
 
       - name: Custom Packages
