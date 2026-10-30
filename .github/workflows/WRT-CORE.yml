@@ -166,6 +166,8 @@ jobs:
         run: |
           cd ./wrt/
 
+          make defconfig -j$(nproc)
+
           if [[ "${WRT_CONFIG,,}" == *"test"* ]]; then
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt >> .config
           else
@@ -174,7 +176,12 @@ jobs:
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
-          make defconfig -j$(nproc) && make clean -j$(nproc)
+          make olddefconfig -j$(nproc)
+          # 调试输出，看日志
+          echo "==== Check wireguard config ===="
+          grep -E 'CONFIG_PACKAGE_kmod-wireguard|CONFIG_WIREGUARD' .config
+
+          make clean -j$(nproc)
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
