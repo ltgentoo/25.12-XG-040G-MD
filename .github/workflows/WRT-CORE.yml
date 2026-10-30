@@ -153,9 +153,12 @@ jobs:
           cd ./wrt/
 
           ./scripts/feeds update -a
+          # 清理旧的tmp，销毁残留的 .config-package.in
+          rm -rf tmp
+          # 删除有问题包目录（两个路径兜底）
           rm -rf feeds/video
           rm -rf feeds/packages/net/fwknop
-          rm -rf feeds/packages/sound/squeezelite-custom
+          rm -rf feeds/packages/audio/squeezelite-custom feeds/packages/sound/squeezelite-custom
           
           ./scripts/feeds install -a
 
