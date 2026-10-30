@@ -182,6 +182,10 @@ jobs:
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           make defconfig -j$(nproc) && make clean -j$(nproc)
+          # defconfig跑完之后，再次追加wireguard配置！
+          echo "CONFIG_PACKAGE_kmod-wireguard=m" >> .config
+          echo "CONFIG_PACKAGE_wireguard-tools=m" >> .config
+          echo "CONFIG_PACKAGE_luci-app-wireguard=m" >> .config
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
